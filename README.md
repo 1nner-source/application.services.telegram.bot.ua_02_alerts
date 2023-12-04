@@ -19,7 +19,7 @@ This project contains a Telegram bot that performs various functions, including 
 
 1. Clone the repository:
  ```
-git clone https://github.com/your-username/telegram-bot.git
+git clone [https://github.com/your-username/telegram-bot.git](https://github.com/prossion/air-alert-telegram-bot#installation)
 ```
 2. Install dependencies:
 ```
