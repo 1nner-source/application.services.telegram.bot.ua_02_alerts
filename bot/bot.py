@@ -1,26 +1,29 @@
+from multiprocessing import Queue
 from handlers import start, help_command, set_city, weather, choose_state, received_state, cancel
-from telegram.ext import Updater, CommandHandler, ConversationHandler, MessageHandler, Filters
+from telegram.ext import Updater, CommandHandler, ConversationHandler, MessageHandler, filters
 from utils.constants import TELEGRAM_TOKEN
+
 
 # Conversation states
 CHOOSING_STATE, TYPING_REPLY = range(2)
 
 def main() -> None:
-    updater = Updater(TELEGRAM_TOKEN)
-    dispatcher = updater.dispatcher
+    update_queue = Queue()
+    updater = Updater(TELEGRAM_TOKEN, update_queue=update_queue)
+    # dispatcher = updater.dispatcher
 
     conv_handler = ConversationHandler(
         entry_points=[CommandHandler('choose_state', choose_state)],
         states={
-            CHOOSING_STATE: [MessageHandler(Filters.text & ~Filters.command, received_state)],
+            CHOOSING_STATE: [MessageHandler(filters.Text & filters.Command, received_state)],
         },
         fallbacks=[CommandHandler('cancel', cancel)]
     )
 
-    dispatcher.add_handler(CommandHandler("start", start))
-    dispatcher.add_handler(CommandHandler("help", help_command))
-    dispatcher.add_handler(CommandHandler("set_city", set_city))
-    dispatcher.add_handler(CommandHandler("weather", weather))
+    updater.add_handler(CommandHandler("start", start))
+    updater.add_handler(CommandHandler("help", help_command))
+    updater.add_handler(CommandHandler("set_city", set_city))
+    updater.add_handler(CommandHandler("weather", weather))
 
     # Set up a job to fetch alert data periodically
     job_queue = updater.job_queue
