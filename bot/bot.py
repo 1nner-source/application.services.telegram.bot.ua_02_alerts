@@ -10,7 +10,6 @@ CHOOSING_STATE, TYPING_REPLY = range(2)
 def main() -> None:
     update_queue = Queue()
     updater = Updater(TELEGRAM_TOKEN, update_queue=update_queue)
-    # dispatcher = updater.dispatcher
 
     conv_handler = ConversationHandler(
         entry_points=[CommandHandler('choose_state', choose_state)],
