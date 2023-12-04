@@ -23,8 +23,8 @@ Note:
     Ensure that sensitive information like API keys is kept secure and not exposed
     publicly in repositories or shared environments.
 """
-TELEGRAM_TOKEN = "6604152062:AAGj8J1AOfSc4IG56EGNYtdWUh3UepFaiL8"
-WEATHER_API_KEY = "37dc28d8e840de8eaaa7cd24ec79709f"
+TELEGRAM_TOKEN = "YOUR_TELEGRAM_ TOKEN"
+WEATHER_API_KEY = "YOUR_WEATHER_KEY"
 BASE_ALERTS_API_URL = "https://alerts.com.ua/api/states/"
 STATES_API_URL = "https://alerts.com.ua/api/states"
 API_KEY = "YOUR_API_KEY"

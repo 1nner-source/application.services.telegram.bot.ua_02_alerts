@@ -118,6 +118,6 @@ def fetch_data(context: CallbackContext) -> None:
     else:
         context.bot.send_message(job.context['chat_id'], 'Для отримання погоди не вказано місто.')
 
-def cancel(update: Update, context: CallbackContext) -> int:
+def cancel(update: Update) -> int:
     update.message.reply_text("Cancelled.", reply_markup=ReplyKeyboardRemove())
     return ConversationHandler.END
