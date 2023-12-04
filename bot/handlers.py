@@ -1,10 +1,7 @@
 import requests
 from telegram import Update, ReplyKeyboardMarkup, ReplyKeyboardRemove
 from telegram.ext import  ConversationHandler, CallbackContext
-from utils.constants import WEATHER_API_KEY, BASE_ALERTS_API_URL, API_KEY, states
-
-# Conversation states
-CHOOSING_STATE, TYPING_REPLY = range(2)
+from utils.constants import WEATHER_API_KEY, BASE_ALERTS_API_URL, API_KEY, states, CHOOSING_STATE
 
 def start(update: Update, context: CallbackContext) -> None:
     update.message.reply_text('Привіт! Я твій універсальний бот. Напиши /help щоб подивитись доступні команди.')

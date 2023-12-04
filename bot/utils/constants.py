@@ -4,6 +4,9 @@ BASE_ALERTS_API_URL = "https://alerts.com.ua/api/states/"
 STATES_API_URL = "https://alerts.com.ua/api/states"
 API_KEY = "YOUR_API_KEY"
 
+# Conversation states
+CHOOSING_STATE, TYPING_REPLY = range(2)
+
 # List of states with their names and IDs
 states = [
     {"id": 1, "name": "Вінницька область"},
