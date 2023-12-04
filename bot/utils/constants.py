@@ -1,3 +1,28 @@
+"""Constants Module for Telegram Bot Configuration
+
+This module contains constant values used throughout the Telegram bot application,
+including API tokens, URLs, and other configuration settings.
+
+Constants:
+    - TOKEN (str): The Telegram Bot API token used for bot authentication.
+    - WEATHER_API_KEY (str): API key for accessing the weather data API.
+    - BASE_ALERTS_API_URL (str): Base URL for the alerts API.
+    - API_KEY (str): API key for authentication in a specific service.
+    - STATES (list): List of states with their IDs and names for user selection.
+
+Example Usage:
+    This module is imported wherever constant values are required in the bot's logic.
+    For instance:
+        - To set up the Telegram bot token in 'bot.py':
+            `from utils.constants import TOKEN`
+
+        - Accessing the list of states in a conversation handler in 'handlers.py':
+            `from utils.constants import STATES`
+
+Note:
+    Ensure that sensitive information like API keys is kept secure and not exposed
+    publicly in repositories or shared environments.
+"""
 TELEGRAM_TOKEN = "6604152062:AAGj8J1AOfSc4IG56EGNYtdWUh3UepFaiL8"
 WEATHER_API_KEY = "37dc28d8e840de8eaaa7cd24ec79709f"
 BASE_ALERTS_API_URL = "https://alerts.com.ua/api/states/"
@@ -32,5 +57,5 @@ states = [
     {"id": 21, "name": "Хмельницька область"},
     {"id": 22, "name": "Черкаська область"},
     {"id": 23, "name": "Чернівецька область"},
-    {"id": 24, "name": "Чернігівська область"},
+    {"id": 24, "name": "Чернігівська область"}
 ]

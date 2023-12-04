@@ -1,3 +1,30 @@
+"""Handlers Module for Telegram Bot
+
+This module contains the command and message handlers used in the Telegram bot. It includes
+functions to handle various commands, messages, and conversation flows within the bot.
+
+Functions:
+    - start(update, context): Handles the /start command.
+    - help_command(update, context): Handles the /help command.
+    - set_city(update, context): Handles setting the user's city for weather updates.
+    - weather(update, context): Retrieves weather updates for the user's city.
+    - choose_state(update, context): Initiates the state selection conversation flow.
+    - received_state(update, context): Handles user's state selection in the conversation.
+    - cancel(update, context): Handles cancelling the ongoing conversation.
+
+Example Usage:
+    These functions are utilized as command and message handlers in the bot's main logic. They're
+    added to the dispatcher to respond to specific commands or messages. For instance:
+
+        - Adding 'start' command handler in 'bot.py':
+            `dispatcher.add_handler(CommandHandler("start", start))`
+
+        - Implementing a conversation handler using 'choose_state' and 'received_state' functions.
+
+Note:
+    The handlers in this module are integrated with the Telegram bot's functionality and are invoked
+    based on user commands, messages, or conversation flow triggers.
+"""
 import requests
 from telegram import Update, ReplyKeyboardMarkup, ReplyKeyboardRemove
 from telegram.ext import  ConversationHandler, CallbackContext

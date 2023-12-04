@@ -1,3 +1,29 @@
+"""Telegram Bot Main Script
+
+This script initializes and runs the Telegram bot. It sets up the bot's functionality by defining
+command handlers, message handlers, conversation handlers, and other components necessary for the bot
+to interact with users on the Telegram platform.
+
+Functionality:
+    - Initializes the bot using the Telegram Bot API token.
+    - Defines various handlers to respond to user commands and messages.
+    - Implements conversation flows for complex interactions using ConversationHandler.
+    - Sets up periodic jobs for fetching weather updates and alert data.
+
+Components:
+    - main(): The main function that sets up the bot, initializes handlers, and starts the bot.
+
+Example Usage:
+    To run the bot, execute this script. Ensure the correct Telegram Bot API token is set in the TOKEN
+    constant within this script.
+
+    For instance:
+        $ python bot.py
+
+Note:
+    Ensure sensitive information like API tokens, keys, or any credentials are kept secure and not
+    exposed publicly in repositories or shared environments.
+"""
 from multiprocessing import Queue
 from handlers import start, help_command, set_city, weather, choose_state, received_state, cancel
 from telegram.ext import Updater, CommandHandler, ConversationHandler, MessageHandler, filters
