@@ -30,10 +30,12 @@ from telegram import Update, ReplyKeyboardMarkup, ReplyKeyboardRemove
 from telegram.ext import  ConversationHandler, CallbackContext
 from utils.constants import WEATHER_API_KEY, states, CHOOSING_STATE
 
-def start(update: Update, context: CallbackContext) -> None:
+def start(update: Update) -> None:
+    """Start the bot"""
     update.message.reply_text('Привіт! Я твій універсальний бот. Напиши /help щоб подивитись доступні команди.')
 
-def help_command(update: Update, context: CallbackContext) -> None:
+def help_command(update: Update) -> None:
+    """Help commands"""
     update.message.reply_text('Ви можете використовувати наступні команди:\n'
                               '/start - Запустити бота\n'
                               '/help - Отримати допомогу\n'
@@ -42,7 +44,8 @@ def help_command(update: Update, context: CallbackContext) -> None:
                               '/weather - Отримуйте оновлення погоди у вашому місті'
                               '/choose_state - Оберіть вашу область')
     
-def choose_state(update: Update, context: CallbackContext) -> int:
+def choose_state(update: Update) -> int:
+    """Function to set the user state"""
     keyboard = [
         [f"{state['name']} ({state['id']})"] for state in states
     ]
@@ -52,10 +55,8 @@ def choose_state(update: Update, context: CallbackContext) -> int:
     )
     return CHOOSING_STATE    
 
-
-
-
 def set_city(update: Update, context: CallbackContext) -> None:
+    """Function to set the user city"""
     city = ' '.join(context.args)
     if city:
         context.user_data['city'] = city
@@ -64,23 +65,25 @@ def set_city(update: Update, context: CallbackContext) -> None:
         update.message.reply_text('Укажіть дійсну назву міста')
 
 def weather(update: Update, context: CallbackContext) -> None:
+    """Trigger the fetch_data to get the weather data"""
     if 'city' in context.user_data:
         city = context.user_data['city']
         # Here, you can trigger the job with the city information
-        job = context.job_queue.run_once(fetch_data, 0, context=update.message.chat_id, city=city)
+        context.job_queue.run_once(fetch_data, 0, context=update.message.chat_id, city=city)
         update.message.reply_text(f"Отримання оновленої інформації про погоду для {city}...")
     else:
-        update.message.reply_text('Будь ласка, встановіть своє місто за допомогою команди /set_city')  
+        update.message.reply_text('Будь ласка, встановіть своє місто за допомогою команди /set_city')
 
-# * Test function for obtaining weather data for the city selected by the user. 
-# * This api doesn't work with such parameters, because it's' not the city that needs to be transferred, 
+# * Test function for obtaining weather data for the city selected by the user.
+# * This api doesn't work with such parameters, because it's' not the city that needs to be transferred,
 # * but rather its longitude/latitude parameters
 def fetch_data(context: CallbackContext) -> None:
+    """Fetch the weather data from API"""
     job = context.job
     if 'city' in job.context:  # Check if 'city' data is already stored in job context
         city = job.context['city']
         weather_api_url = f"https://api.weatherapi.com/v1/current.json?key={WEATHER_API_KEY}&q={city}"
-        response = requests.get(weather_api_url)
+        response = requests.get(weather_api_url, timeout=10)
         if response.status_code == 200:
             weather_data = response.json()
             temperature = weather_data['current']['temp_c']
@@ -91,6 +94,7 @@ def fetch_data(context: CallbackContext) -> None:
         context.bot.send_message(job.context['chat_id'], 'Для отримання погоди не вказано місто.')
 
 def cancel(update: Update) -> int:
+    """Function to cancel tje Conversation Handler"""
     update.message.reply_text("Cancelled.", reply_markup=ReplyKeyboardRemove())
     return ConversationHandler.END
 # End-of-file (EOF)

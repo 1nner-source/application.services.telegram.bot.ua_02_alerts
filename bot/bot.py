@@ -1,8 +1,8 @@
 """Telegram Bot Main Script
 
 This script initializes and runs the Telegram bot. It sets up the bot's functionality by defining
-command handlers, message handlers, conversation handlers, and other components necessary for the bot
-to interact with users on the Telegram platform.
+command handlers, message handlers, conversation handlers, and other components necessary 
+for the bot to interact with users on the Telegram platform.
 
 Functionality:
     - Initializes the bot using the Telegram Bot API token.
@@ -14,7 +14,8 @@ Components:
     - main(): The main function that sets up the bot, initializes handlers, and starts the bot.
 
 Example Usage:
-    To run the bot, execute this script. Ensure the correct Telegram Bot API token is set in the TOKEN
+    To run the bot, execute this script. 
+    Ensure the correct Telegram Bot API token is set in the TOKEN
     constant within this script.
 
     For instance:
@@ -25,14 +26,14 @@ Note:
     exposed publicly in repositories or shared environments.
 """
 import requests
-from multiprocessing import Queue
 from handlers import start, help_command, set_city, weather, choose_state, cancel
 from telegram import Update
-from telegram.ext import Application, CommandHandler, ConversationHandler, MessageHandler, filters, CallbackContext
+from telegram.ext import Application, CommandHandler, ConversationHandler, MessageHandler, filters
 from utils.constants import TELEGRAM_TOKEN, CHOOSING_STATE, BASE_ALERTS_API_URL, API_KEY, states
 
 # * The alarm is received from this API https://alerts.com.ua/, it is planned to switch to the official API https://www.ukrainealarm.com/
-def received_state(update: Update, context: CallbackContext) -> int:
+def received_state(update: Update) -> int:
+    """Get the Air Alert data from the api"""
     user_input = update.message.text
 
     # Extract the selected state's ID from the user's input
@@ -40,10 +41,9 @@ def received_state(update: Update, context: CallbackContext) -> int:
 
     if selected_state_id:
         # Construct the API URL using the selected state's ID
-        state_api_url = f"{BASE_ALERTS_API_URL}{selected_state_id}"
-        
+        state_api_url = f"{BASE_ALERTS_API_URL}{selected_state_id}"        
         # Make API request with the constructed URL
-        response = requests.get(state_api_url, headers={"X-API-Key": API_KEY})
+        response = requests.get(state_api_url, headers={"X-API-Key": API_KEY}, timeout=10)
 
         if response.status_code == 200:
             alert_data = response.json()
@@ -62,6 +62,7 @@ def received_state(update: Update, context: CallbackContext) -> int:
     return CHOOSING_STATE
 
 def main() -> None:
+    """Main function of the bot"""
     application = Application.builder().token(TELEGRAM_TOKEN).build()
 
     conv_handler = ConversationHandler(
