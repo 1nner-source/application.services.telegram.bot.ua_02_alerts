@@ -31,17 +31,18 @@ from telegram import Update
 from telegram.ext import Application, CommandHandler, ConversationHandler, MessageHandler, filters
 from utils.constants import TELEGRAM_TOKEN, CHOOSING_STATE, BASE_ALERTS_API_URL, API_KEY, states
 
-# * The alarm is received from this API https://alerts.com.ua/, it is planned to switch to the official API https://www.ukrainealarm.com/
+# * The alarm is received from this API https://alerts.com.ua/,
+# * it is planned to switch to the official API https://www.ukrainealarm.com/
 def received_state(update: Update) -> int:
     """Get the Air Alert data from the api"""
     user_input = update.message.text
 
     # Extract the selected state's ID from the user's input
-    selected_state_id = next((state['id'] for state in states if f"({state['id']})" in user_input), None)
+    selected_state_id=next((state['id']for state in states if f"({state['id']})"in user_input),None)
 
     if selected_state_id:
         # Construct the API URL using the selected state's ID
-        state_api_url = f"{BASE_ALERTS_API_URL}{selected_state_id}"        
+        state_api_url=f"{BASE_ALERTS_API_URL}{selected_state_id}"
         # Make API request with the constructed URL
         response = requests.get(state_api_url, headers={"X-API-Key": API_KEY}, timeout=10)
 
@@ -58,7 +59,8 @@ def received_state(update: Update) -> int:
 
         return ConversationHandler.END
 
-    update.message.reply_text("Недійсний вибір області. Будь ласка, виберіть область із наданого списку.")
+    update.message.reply_text("Недійсний вибір області."
+                              "Будь ласка, виберіть область із наданого списку.")
     return CHOOSING_STATE
 
 def main() -> None:

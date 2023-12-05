@@ -32,7 +32,8 @@ from utils.constants import WEATHER_API_KEY, states, CHOOSING_STATE
 
 def start(update: Update) -> None:
     """Start the bot"""
-    update.message.reply_text('Привіт! Я твій універсальний бот. Напиши /help щоб подивитись доступні команди.')
+    update.message.reply_text('Привіт! Я твій універсальний бот.'
+                              'Напиши /help щоб подивитись доступні команди.')
 
 def help_command(update: Update) -> None:
     """Help commands"""
@@ -43,7 +44,7 @@ def help_command(update: Update) -> None:
                               '/set_city <city_name> - Налаштуйте своє місто для оновлення погоди\n'
                               '/weather - Отримуйте оновлення погоди у вашому місті'
                               '/choose_state - Оберіть вашу область')
-    
+
 def choose_state(update: Update) -> int:
     """Function to set the user state"""
     keyboard = [
@@ -53,7 +54,7 @@ def choose_state(update: Update) -> int:
         "Будь ласка оберіть свою область:",
         reply_markup=ReplyKeyboardMarkup(keyboard, one_time_keyboard=True, resize_keyboard=True)
     )
-    return CHOOSING_STATE    
+    return CHOOSING_STATE
 
 def set_city(update: Update, context: CallbackContext) -> None:
     """Function to set the user city"""
@@ -72,22 +73,25 @@ def weather(update: Update, context: CallbackContext) -> None:
         context.job_queue.run_once(fetch_data, 0, context=update.message.chat_id, city=city)
         update.message.reply_text(f"Отримання оновленої інформації про погоду для {city}...")
     else:
-        update.message.reply_text('Будь ласка, встановіть своє місто за допомогою команди /set_city')
+        update.message.reply_text('Будь ласка, встановіть своє місто'
+                                  'за допомогою команди /set_city')
 
 # * Test function for obtaining weather data for the city selected by the user.
-# * This api doesn't work with such parameters, because it's' not the city that needs to be transferred,
+# * This api doesn't work with such parameters,
+# * because it's' not the city that needs to be transferred,
 # * but rather its longitude/latitude parameters
 def fetch_data(context: CallbackContext) -> None:
     """Fetch the weather data from API"""
     job = context.job
     if 'city' in job.context:  # Check if 'city' data is already stored in job context
         city = job.context['city']
-        weather_api_url = f"https://api.weatherapi.com/v1/current.json?key={WEATHER_API_KEY}&q={city}"
+        weather_api_url=f"https://api.weatherapi.com/v1/current.json?key={WEATHER_API_KEY}&q={city}"
         response = requests.get(weather_api_url, timeout=10)
         if response.status_code == 200:
             weather_data = response.json()
             temperature = weather_data['current']['temp_c']
-            context.bot.send_message(job.context['chat_id'], f"Поточна температура в {city} - {temperature}°C.")
+            context.bot.send_message(job.context['chat_id'],
+            f"Поточна температура в {city} - {temperature}°C.")
         else:
             context.bot.send_message(job.context['chat_id'], 'Не вдалося отримати дані про погоду.')
     else:
