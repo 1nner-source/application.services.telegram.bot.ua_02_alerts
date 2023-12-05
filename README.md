@@ -28,7 +28,7 @@ pip install -r requirements.txt
 ## Usage
 To run the bot, execute the main script:
 ```
-python main.py
+python bot.py
 ```
 After starting the bot, users can interact with it by sending commands such as /start, /choose_state, etc.
 
