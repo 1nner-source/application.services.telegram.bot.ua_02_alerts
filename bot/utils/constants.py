@@ -23,19 +23,19 @@ Note:
     Ensure that sensitive information like API keys is kept secure and not exposed
     publicly in repositories or shared environments.
 """
-TELEGRAM_TOKEN = "YOUR_TELEGRAM_ TOKEN"
-WEATHER_API_KEY = "YOUR_WEATHER_KEY"
+TELEGRAM_TOKEN = "6806775714:AAGMrkaX2MCzzbWnm02TsCCxWesOXZ-qImo"
+# WEATHER_API_KEY = "YOUR_WEATHER_KEY"
 BASE_ALERTS_API_URL = "https://alerts.com.ua/api/states/"
 STATES_API_URL = "https://alerts.com.ua/api/states"
-API_KEY = "YOUR_API_KEY"
+API_KEY = "ca29e337:10c84d834be5fca13b2f9a8c53d80d29"
 
 # Conversation states
 CHOOSING_STATE, TYPING_REPLY = range(2)
 
 # List of states with their names and IDs
 states = [
-    {"id": 1, "name": "Вінницька область"},
-    {"id": 2, "name": "Волинська область"},
+    {"id": 1, "name": "Волинська область"},
+    {"id": 2, "name": "Вінницька область"},
     {"id": 3, "name": "Дніпропетровська область"},
     {"id": 4, "name": "Донецька область"},
     {"id": 5, "name": "Житомирьска область"},
