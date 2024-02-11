@@ -28,7 +28,7 @@ Note:
 import requests
 from handlers import start, help_command, set_city, weather, choose_state, cancel
 from telegram import Update
-from telegram.ext import Application, CommandHandler, ConversationHandler, MessageHandler, filters
+from telegram.ext import Application, CommandHandler, ConversationHandler, MessageHandler, filters, JobQueue
 from utils.constants import TELEGRAM_TOKEN, CHOOSING_STATE, BASE_ALERTS_API_URL, API_KEY, states
 
 # * The alarm is received from this API https://alerts.com.ua/,
